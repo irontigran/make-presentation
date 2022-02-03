@@ -1,16 +1,10 @@
 objects := game.o commands.o map.o
 
 game: $(objects)
-	gcc -o game $(objects)
 
-game.o: game.c common.h commands.h map.h
-	gcc -c game.c
-
-commands.o: commands.c commands.h common.h
-	gcc -c commands.c
-
-map.o: map.c map.h common.h
-	gcc -c map.c
+game.o: common.h commands.h map.h
+commands.o: commands.h common.h
+map.o: map.h common.h
 
 clean:
 	$(RM) *.o game
