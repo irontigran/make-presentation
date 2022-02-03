@@ -2,9 +2,8 @@ objects := game.o commands.o map.o
 
 game: $(objects)
 
-game.o: common.h commands.h map.h
-commands.o: commands.h common.h
-map.o: map.h common.h
+$(objects): %.o : %.h common.h
+game.o: commands.h map.h
 
 clean:
 	$(RM) *.o game
