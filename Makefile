@@ -1,9 +1,16 @@
-objects := game.o commands.o map.o
+VPATH := src:include
+CPPFLAGS += -Iinclude
 
-game: $(objects)
+builddir := build
+objects := $(addprefix $(builddir)/, map.o game.o commands.o)
 
-$(objects): %.o : %.h common.h
-game.o: commands.h map.h
+$(builddir)/game: $(objects) | $(builddir)
+
+$(objects): $(builddir)/%.o: %.c %.h common.h | $(builddir)
+	$(CC) $(CPPFLAGS) $(CFLAGS) -c -o $@ $<
+
+$(builddir):
+	mkdir -p $@
 
 clean:
-	$(RM) *.o game
+	$(RM) $(objects)
